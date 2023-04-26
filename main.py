@@ -38,8 +38,8 @@ def MainParcer(urls_category):
             def ParsingUrlsProducts():
                 product_urls = []
                 time.sleep(10)
-                block = driver.find_element(By.XPATH, "//div[@class='El Eo']")
-                link_elements = block.find_elements(By.XPATH, "//section[@class='Il Ip En']/a")
+                block = driver.find_element(By.XPATH, "//div[@class='y_ y_2']")
+                link_elements = block.find_elements(By.XPATH, "//section[@class='H_9 Id y_1']/a")
 
                 # button = block.find_elements(By.XPATH, "//button[@class='fw zu fB fH']")
                 # for i in button:
@@ -62,7 +62,7 @@ def MainParcer(urls_category):
                     print("Товары не найдены")
                     pass
                 try:
-                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='eg ek ez eq eG eK et']")))
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='eh el eA er eH eL eu']")))
                     print("Кнопка загрузки обнаружена")
                 except:
                     print("Кнопка загрузки не найдена")
@@ -77,7 +77,7 @@ def MainParcer(urls_category):
                             except Exception as e:
                                 print('Кнопка далее не работает!')
                             try:
-                                    WebDriverWait(driver, 2).until( EC.element_to_be_clickable((By.XPATH, "//button[@class='eg ek ez eq eG eK et']")))
+                                    WebDriverWait(driver, 2).until( EC.element_to_be_clickable((By.XPATH, "//button[@class='eh el eA er eH eL eu']")))
                                     product_urls += ParsingUrlsProducts()
                             except:
                                     print("Выход из цикла!!!")
@@ -90,7 +90,7 @@ def MainParcer(urls_category):
 
 
         def ChoiceAktobe():
-            driver.find_element(By.XPATH, "//li[@class='nM n_3 nU nX nN cV cW nS']/div[@class='nQ']").click()
+            driver.find_element(By.XPATH, "//span[contains(text(),'Алматы')]").click()
             driver.implicitly_wait(1)
             driver.find_element(By.XPATH, "//span[contains(text(),'Актобе')]").click()
 
@@ -107,13 +107,14 @@ def MainParcer(urls_category):
                 # except:
                 #     driver.switch_to.default_content()
                 try:
+
                     driver.switch_to.frame("fl-350315")
                     driver.find_element(By.XPATH, "//a[@class='Notification-button Notification-buttonBlock']").click()
                     driver.switch_to.default_content()
-                    driver.find_element(By.XPATH, "//div[@class='v w']/button[@class='eg A ek ez eq eG eL']").click()
+                    driver.find_element(By.XPATH, "//button[@class='eh o el eA er eH eM']").click()
                 except:
                     driver.switch_to.default_content()
-                    driver.find_element(By.XPATH, "//div[@class='v w']/button[@class='eg A ek ez eq eG eL']").click()
+                    driver.find_element(By.XPATH, "//button[@class='eh o el eA er eH eM']").click()
 
             except Exception as e:
                 driver.switch_to.default_content()
@@ -134,30 +135,36 @@ def MainParcer(urls_category):
                     try:
                         try:
                             driver.implicitly_wait(2)
-                            price = driver.find_element(By.XPATH, '//div[@class="XG"]/div[@class="bbn"]/div[@class="bbo"]').text
+                            # ЦЕНА БЕЗ АКЦИИ
+                            price = driver.find_element(By.XPATH, '//div[@class="ZL"]/div[@class="bcJ"]/div[@class="bcK"]').text
                             sale_price = price
                         except:
                             driver.implicitly_wait(2)
-                            price = driver.find_element(By.XPATH, '//div[@class="XG"]/div[@class="ba_7 bbc"]/div[@class="ba_9"]/div[@class="bba"]/span').text
-                            sale_price = driver.find_element(By.XPATH, '//div[@class="XG"]/div[@class="ba_7 bbc"]/div[@class="ba_8"]').text
+                            # ЦЕНА С АКЦИЕЙ
+                            price = driver.find_element(By.XPATH, '//div[@class="ZL"]/div[@class="bcJ bcO"]/div[@class="bcL"]/div[@class="bcM"]/span[@class="bcN"]').text
+                            sale_price = driver.find_element(By.XPATH, '//div[@class="ZL"]/div[@class="bcJ bcO"]/div[@class="bcK"]').text
                     except:
                         try:
                             try:
                                 price = driver.find_element(By.XPATH, "//div[@class='bb_']").text
                                 sale_price = driver.find_element(By.XPATH, "//div[@class='bb_3 bb_5']").text
                             except:
-                                price = driver.find_element(By.XPATH, "//div[@class='bb_3'] || //p[@class='bb_3']").text
+
+                                # ЦЕНА С БОНУСАМИ ПОД ЦЕНОЙ
+                                price = driver.find_element(By.XPATH, "//div[@class='bbS'] || //p[@class='bbV']").text
                                 sale_price = price
                         except:
                             try:
-                                price = driver.find_element(By.XPATH, "//div[@class='ba_7']/div[@class='ba_8']").text
+                                # Цена с бонусами снизу под кнопкой
+                                price = driver.find_element(By.XPATH, "//div[@class='bcJ']/div[@class='bcK']").text
                                 sale_price = price
                             except:
                                 try:
-                                    price = driver.find_element(By.XPATH, "//div[@class='bbZ']/p[@class='bb_']").text
-                                    sale_price = driver.find_element(By.XPATH, "//div[@class='bb_0']/p[@class='bb_3 bb_5']").text
+                                    # ЦЕНА ПО АКЦИИ БЕЗ ЖЕЛТОГО ФОНА
+                                    price = driver.find_element(By.XPATH, "//div[@class='bbQ']/p[@class='bbR']").text
+                                    sale_price = driver.find_element(By.XPATH, "//div[@class='bbS']/p[@class='bbV bbX']").text
                                 except:
-                                    price = driver.find_element(By.XPATH, "//div[@class='bb_0']/p[@class='bb_3']").text
+                                    price = driver.find_element(By.XPATH, "//div[@class='bbS']/p[@class='bbV']").text
                                     sale_price = price
                 except Exception as e:
                     print("НЕ НАШЛИ ЦЕНУ!")
@@ -167,16 +174,19 @@ def MainParcer(urls_category):
 
                 try:
                     try:
-                        name = driver.find_element(By.XPATH, '//header[@class="Hz ix"]/h1').text
+                        try:
+                            name = driver.find_element(By.XPATH, '//header[@class="G_1 G_2"]/h1').text
+                        except:
+                            name = driver.find_element(By.XPATH, '//h1[@class="G_1 G_2"]').text
                     except:
-                        name = driver.find_element(By.XPATH, '//h1[@class="YL"]').text
+                        name = driver.find_element(By.XPATH, '//h1[@class="W_0"]').text
                 except:
                     print("Название нет")
                 try:
                     try:
-                        picture = driver.find_element(By.XPATH, '//picture[@class="Hg Hh"]/img').get_attribute('src')
+                        picture = driver.find_element(By.XPATH, '//picture[@class="Zn Zo"]/img[@class="Zj"]').get_attribute('src')
                     except:
-                        picture = driver.find_element(By.XPATH, '//picture[@class="Et"]/img').get_attribute('src')
+                        picture = driver.find_element(By.XPATH, '//picture[@class="Fa"]/img[@class="mH _8_5 mJ"]').get_attribute('src')
                 except:
                         print("Картинки нет")
                 try:
@@ -185,7 +195,7 @@ def MainParcer(urls_category):
                     print("sku нет")
 
                 category = ">".join(map(str, product_category))
-                with open('31_03_2023_DM_MALL_new.csv', 'a', encoding='utf-8') as file:
+                with open('25_04_2023_DM_MALL_new.csv', 'a', encoding='utf-8') as file:
                     writer = csv.writer(file, delimiter=";", lineterminator="\r")
                     writer.writerow(
                         [name, price, sale_price, picture, category, sku]
@@ -208,6 +218,7 @@ def MainParcer(urls_category):
 
 
         print("Перехожу на категорию:", urls_category + "?filter=stores:3107%2C3396")
+
         driver.get(urls_category +"?filter=stores:3107%2C3396")
         CheckWindowMail();
         winHandleBefore = driver.window_handles[0]
@@ -216,8 +227,8 @@ def MainParcer(urls_category):
         driver.implicitly_wait(10)
         product_category = []
         try:
-           block_header = driver.find_element(By.XPATH, '//header[@class="Hz ix"]/nav[@aria-label="breadcrumb"]')
-           for element in block_header.find_elements(By.XPATH, '//nav[@aria-label="breadcrumb"]/ul[@class="Ln Lw"]/li[@class="Lp"]'):
+           block_header = driver.find_element(By.XPATH, '//header[@class="G_ ik"]/nav[@aria-label="breadcrumb"]')
+           for element in block_header.find_elements(By.XPATH, '//nav[@aria-label="breadcrumb"]/ul[@class="I_8 Jh"]/li[@class="Ja"]'):
                  product_category.append(element.text)
         except:
               print("Нет категорий")
@@ -283,7 +294,7 @@ if __name__ == '__main__':
             lines2.append(line)
         urls_category += lines2
 
-    with open('31_03_2023_DM_MALL_new.csv', 'a', encoding='utf-8') as file:
+    with open('25_04_2023_DM_MALL_new.csv', 'a', encoding='utf-8') as file:
         writer = csv.writer(file, delimiter=";", lineterminator="\r")
         writer.writerow(['name', 'priceDM', 'sale_price', 'picture', 'product_category', 'sku'])
     p = Pool(processes=3)
