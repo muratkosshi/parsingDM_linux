@@ -297,6 +297,6 @@ if __name__ == '__main__':
     with open('25_04_2023_DM_MALL_new.csv', 'a', encoding='utf-8') as file:
         writer = csv.writer(file, delimiter=";", lineterminator="\r")
         writer.writerow(['name', 'priceDM', 'sale_price', 'picture', 'product_category', 'sku'])
-    p = Pool(processes=3)
+    p = Pool(processes=1)
     p.map(MainParcer, urls_category)
 
